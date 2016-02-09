@@ -1,7 +1,13 @@
 import sys, os
 
-for i in range(8,24):
-    size = str(2**i)
-    iter = str(1)
-    os.system('update_locations.py ' + size + ' ' + iter)
-    print("HAHAHA")
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("plotLooper <file> <output>")
+        os.sys.exit(-1)
+    filename = sys.argv[1]
+    output = sys.argv[2]
+    for i in range(8,24):
+        size = str(2**i)
+        iter = str(1)
+        os.sys('filename ' + size + ' ' + iter + ' ' + output)
+    os.sys.exit(0)

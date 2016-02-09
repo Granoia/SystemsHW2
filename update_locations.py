@@ -25,12 +25,16 @@ def update_coords(x, y, z, vx, vy, vz):
 
 ############ Main:
 
-if (len(sys.argv) != 3):
-    print("Required arguments: vector_length(N) and iterations_num(M)")
+if (len(sys.argv) < 3):
+    print("Required arguments: vector_length(N) and iterations_num(M) (optional: output file)")
     sys.exit(-1)
 
 size = int(sys.argv[1])
 iters = int(sys.argv[2])
+if len(sys.argv) != 4:
+    output = None
+else:
+    output = sys.argv[3]
 
 random.seed(size)
 
@@ -46,7 +50,8 @@ t = timeit.timeit(stmt = "update_coords(x, y, z, vx, vy, vz)",
                   number = iters)
 
 chksum = sum(x) + sum(y) + sum(z)
-with open('plot.csv','a') as f:
-    f.write(str(size) + "," + str(1000000 * t / (size * iters)) + "\n")
+if output != None:
+    with open(output,'a') as f:
+        f.write(str(size) + "," + str(1000000 * t / (size * iters)) + "\n")
 
 exit(0)
