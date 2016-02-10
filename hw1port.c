@@ -5,6 +5,11 @@
 #include <time.h>
 #include <stdint.h>
 
+FILE *fileout;
+char outputFilename[] = "temp.txt";
+char *mode = "a";
+
+
 /*generate a list of random doubles within the interval [-bound, bound], length 'size'*/
 double* generate_random_list(uint64_t size, double bound){
   double* ret = malloc(sizeof(double)*size);
@@ -27,14 +32,13 @@ void update_coords(uint64_t size, double* x, double* y, double* z, double* vx, d
 
 
 int main(int argc, char** argv){
-  if(argc != 3){
+  if(argc != 4){
     printf("Ya goofed");
     return -1;
   }
-  srand(time(NULL));
-  int size = atoi(argv[1]);
-  int iters = atoi(argv[2]);
- 
+  int size = 1 << atoi(argv[1]);
+  int iters = 1 << atoi(argv[2]);
+  srand(size);
 
   double* x = generate_random_list(size,1000.);
   double* y = generate_random_list(size,1000.);
@@ -52,6 +56,15 @@ int main(int argc, char** argv){
 
   double elapsed = end.tv_nsec - start.tv_nsec;
   double avg = elapsed/(double)(size * iters);
-  printf("\nAverage Elapsed Time: %f\n",avg);
+  int checksum = 0;
+  for (int i=0; i<size; i++){
+    checksum += x[i] + y[i] + z[i];
+  }
+
+
+  fileout = fopen(outputFilename, mode); 
+  fprintf(fileout, "%f\n",avg);
+  fclose(fileout);
+  printf("checksum is %d\n",checksum);
   return 0;
 }
