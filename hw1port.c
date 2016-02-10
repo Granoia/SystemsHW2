@@ -33,13 +33,8 @@ void update_coords(uint64_t size, double* x, double* y, double* z, double* vx, d
 
 
 int main(int argc, char** argv){
-<<<<<<< HEAD
-  if(argc != 4){
-    printf("Ya goofed");
-=======
-  if(argc != 3){
+  if(argc < 3){
     printf("args: <size> <iters>\n");
->>>>>>> 76abbc66ff3aef6497bc0da5ef1067c452dbbe9a
     return -1;
   }
   int size = 1 << atoi(argv[1]);
@@ -60,15 +55,8 @@ int main(int argc, char** argv){
   
   clock_gettime(CLOCK_MONOTONIC, &end);
 
-  int checksum = 0;
-  for (int i=0; i < size; i++)
-    {
-      checksum += x[i] + y[i] + z[i];
-    }
-
   double elapsed = (end.tv_sec * BILLION + end.tv_nsec) - (start.tv_sec * BILLION + start.tv_nsec);
   double avg = elapsed/(double)(size * iters);
-<<<<<<< HEAD
   int checksum = 0;
   for (int i=0; i<size; i++){
     checksum += x[i] + y[i] + z[i];
@@ -79,10 +67,7 @@ int main(int argc, char** argv){
   fprintf(fileout, "%f\n",avg);
   fclose(fileout);
   printf("checksum is %d\n",checksum);
-=======
   printf("Total elapsed time: %f\n",elapsed);
   printf("Average Elapsed Time: %f\n",avg);
-  printf("checksum: %d\n",checksum);
->>>>>>> 76abbc66ff3aef6497bc0da5ef1067c452dbbe9a
   return 0;
 }
