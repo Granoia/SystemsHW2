@@ -26,11 +26,11 @@ def update_coords(x, y, z, vx, vy, vz):
 ############ Main:
 
 if (len(sys.argv) < 3):
-    print("Required arguments: vector_length(N) and iterations_num(M) (optional: output file)")
+    print("Required arguments: vector_length(2^N) and iterations_num(2^M) (optional: output file)")
     sys.exit(-1)
 
-size = int(sys.argv[1])
-iters = int(sys.argv[2])
+size = 2**int(sys.argv[1])
+iters = 2**int(sys.argv[2])
 if len(sys.argv) != 4:
     output = None
 else:
