@@ -28,7 +28,8 @@ def update_coords(x, y, z, vx, vy, vz):
 if (len(sys.argv) < 3):
     print("Required arguments: vector_length(2^N) and iterations_num(2^M) (optional: output file)")
     sys.exit(-1)
-
+else:
+    print("Arguments: " + sys.argv[1] + ', ' + sys.argv[2] + ', ')
 size = 2**int(sys.argv[1])
 iters = 2**int(sys.argv[2])
 if len(sys.argv) != 4:
@@ -52,6 +53,9 @@ t = timeit.timeit(stmt = "update_coords(x, y, z, vx, vy, vz)",
 chksum = sum(x) + sum(y) + sum(z)
 if output != None:
     with open(output,'a') as f:
-        f.write(str(size) + "," + str(1000000 * t / (size * iters)) + "\n")
+        f.write(str(1000000 * t / (size * iters)) + "\n")
+else:
+    with open('temp.txt','a') as f:
+        f.write(str(1000000 * t / (size * iters)) + '\n')
 
 exit(0)
