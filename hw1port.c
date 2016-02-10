@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdint.h>
+#define BILLION 1000000000
 
 /*generate a list of random doubles within the interval [-bound, bound], length 'size'*/
 double* generate_random_list(uint64_t size, double bound){
@@ -55,7 +56,7 @@ int main(int argc, char** argv){
       checksum += x[i] + y[i] + z[i];
     }
 
-  double elapsed = end.tv_nsec - start.tv_nsec;
+  double elapsed = (end.tv_sec * BILLION + end.tv_nsec) - (start.tv_sec * BILLION + start.tv_nsec);
   double avg = elapsed/(double)(size * iters);
   printf("Total elapsed time: %f\n",elapsed);
   printf("Average Elapsed Time: %f\n",avg);
