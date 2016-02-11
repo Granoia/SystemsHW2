@@ -24,7 +24,8 @@ double* generate_random_list(uint64_t size, double bound){
 /*update location by velocity, one time-step*/
 void update_coords(uint64_t size, double* x, double* y, double* z, double* vx, double* vy, double* vz)
 {
-  asm(   "movq $0, %%rdi; "
+  asm(   
+         "movq $0, %%rdi; "
 
 	 ".cond: "
 	 "cmpq %0, %%rdi; "
@@ -33,6 +34,15 @@ void update_coords(uint64_t size, double* x, double* y, double* z, double* vx, d
 	 "movsd (%1,%%rdi,8), %%xmm0; "
 	 "addsd (%2,%%rdi,8), %%xmm0; "
 	 "movsd %%xmm0, (%1,%%rdi,8); "
+
+	 "movsd (%3,%%rdi,8), %%xmm0; "
+	 "addsd (%4,%%rdi,8), %%xmm0; "
+	 "movsd %%xmm0, (%3,%%rdi,8); "
+
+	 "movsd (%5,%%rdi,8), %%xmm0; "
+	 "addsd (%6,%%rdi,8), %%xmm0; "
+	 "movsd %%xmm0, (%5,%%rdi,8); "
+
 	 "addq $1, %%rdi; "
 	 "jmp .cond; "
 	 ".end: "
@@ -59,18 +69,6 @@ if(argc < 3){
   double* vx = generate_random_list(size,1.);
   double* vy = generate_random_list(size,1.);
   double* vz = generate_random_list(size,1.);
-
-  for (int i=0; i < size; i++) printf("%f, ",x[i]);
-  printf("\n");
-  for (int i=0; i < size; i++) printf("%f, ",vx[i]);
-  printf("\n");
-  update_coords(size,x,y,z,vx,vy,vz);
-  printf("Updated.\n");
- for (int i=0; i < size; i++) printf("%f, ",x[i]);
-  printf("\n");
-  for (int i=0; i < size; i++) printf("%f, ",vx[i]);
-  printf("\n\n");
-  return 0;
 
   struct timespec start,end;
   clock_gettime(CLOCK_MONOTONIC, &start);
