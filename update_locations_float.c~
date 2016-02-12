@@ -11,10 +11,10 @@ const char outputFilename[] = "temp.txt";
 
 
 /*generate a list of random doubles within the interval [-bound, bound], length 'size'*/
-double* generate_random_list(uint64_t size, double bound){
-  double* ret = malloc(sizeof(double)*size);
+float* generate_random_list(uint64_t size, double bound){
+  float* ret = malloc(sizeof(float)*size);
   for(uint64_t i=0; i<size; i++){
-    double x = (double)rand()/(double)(RAND_MAX/(2*bound)); /*generates a number in [0,2*bound]*/
+    float x = (float)rand()/(float)(RAND_MAX/(2*bound)); /*generates a number in [0,2*bound]*/
       x = bound - x;
       ret[i]= x;
      }
@@ -22,7 +22,7 @@ double* generate_random_list(uint64_t size, double bound){
 }
 
 /*update location by velocity, one time-step*/
-void update_coords(uint64_t size, double* x, double* y, double* z, double* vx, double* vy, double* vz)
+void update_coords(uint64_t size, float* x, float* y, float* z, float* vx, float* vy, float* vz)
 {
   for(uint64_t i=0; i<size; i++)
   {
@@ -38,18 +38,18 @@ int main(int argc, char** argv){
     printf("args: <size> <iters>\n");
     return -1;
   }
-  int size = 1 << atoi(argv[1]);
-  int iters = 1 << atoi(argv[2]);
+  uint64_t size = 1 << atoi(argv[1]);
+  uint64_t iters = 1 << atoi(argv[2]);
 
   srand(size);
 
 
-  double* x = generate_random_list(size,1000.);
-  double* y = generate_random_list(size,1000.);
-  double* z = generate_random_list(size,1.);
-  double* vx = generate_random_list(size,1.);
-  double* vy = generate_random_list(size,1.);
-  double* vz = generate_random_list(size,1.);
+  float* x = generate_random_list(size,1000.);
+  float* y = generate_random_list(size,1000.);
+  float* z = generate_random_list(size,1.);
+  float* vx = generate_random_list(size,1.);
+  float* vy = generate_random_list(size,1.);
+  float* vz = generate_random_list(size,1.);
 
   struct timespec start,end;
   clock_gettime(CLOCK_MONOTONIC, &start);
@@ -58,10 +58,10 @@ int main(int argc, char** argv){
   
   clock_gettime(CLOCK_MONOTONIC, &end);
 
-  double elapsed = (end.tv_sec * BILLION + end.tv_nsec) - (start.tv_sec * BILLION + start.tv_nsec);
-  double avg = elapsed/(double)(size * iters);
+  float elapsed = (end.tv_sec * BILLION + end.tv_nsec) - (start.tv_sec * BILLION + start.tv_nsec);
+  float avg = elapsed/(size * iters);
   int checksum = 0;
-  for (int i=0; i<size; i++){
+  for (uint64_t i=0; i<size; i++){
     checksum += x[i] + y[i] + z[i];
   }
 
@@ -69,6 +69,6 @@ int main(int argc, char** argv){
   fprintf(fileout, "%f\n",avg);
   fclose(fileout);
   printf("checksum is %d\n",checksum);
-  printf("Average Elapsed Time: %fns\n",avg);
+  printf("Average Elapsed Time: %fus\n",avg);
   return 0;
 }
