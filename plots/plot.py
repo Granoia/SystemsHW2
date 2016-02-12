@@ -33,9 +33,9 @@ if __name__ == '__main__':
 	plt.yscale('symlog')
 	
 	plot('python.csv')
-	plot('double_O1.csv')
+	plot('double_O0.csv')
 	plot('double_O3.csv')
-	plot('float_O1.csv')
+	plot('float_O0.csv')
 	plot('float_O3.csv')
 	plot('x86.csv')
 	
