@@ -2,23 +2,30 @@ import sys, os, numpy, subprocess
 #Determines the correct number of iterations and records data.?
 
 def getIters(filename, size, output):
-    iters = 1
-    while True:
-        if iters > 20:
-            break
-        for i in range(3):
-            subprocess.call(['./update_location', str(size), str(iters), 'temp.txt'])
+    currSize = 8
+    while currSize <= 24:
+        iters = 30 - currSize
+        for i in range(5):
+            subprocess.call(['./update_location', str(size), str(iters)])
+        ls = []
         with open('temp.txt','r') as f:
             x = float(f.readline())
             y = float(f.readline())
             z = float(f.readline())
+            w = float(f.readline())
+            u = float(f.readline())
+        ls = []
+        ls.append(x)
+        ls.append(y)
+        ls.append(z)
+        ls.append(w)
+        ls.append(u)
+        ls.sort
+        median = ls[2]
         os.remove('temp.txt')
-        if numpy.std([x,y,z,]) < x/100:
-            with open(output,'a') as f:
-                f.write(str(size) + ',' + str((x+y+z)/3) + ',' + str(iters) + '\n')
-            break
-        else:
-            iters += 1
+        with open(output,'a') as f:
+            f.write(str(currSize) + ',' + str(median) + ',' + str(iters) + '\n')
+        currSize += 1
             
 
 if __name__ == "__main__":
@@ -26,6 +33,4 @@ if __name__ == "__main__":
         print("plotLooper  <output>")
         os.sys.exit(-1)
     output = sys.argv[1]
-    
-    for i in range(8,25):
-        getIters('.\update_location', i, output)
+    getIters('./update_location', 8, output)
