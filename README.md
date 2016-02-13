@@ -37,3 +37,4 @@ update_locations_x86.c <size> <iters>: C benchmark with doubles and inline x86. 
 //
 plot.py: Plots all of the data. Filenames are hardcoded.
 .csv files: Data used for plot.py.
+![Alt text](/plots/figure_1.png?raw=true "Plots")
