@@ -5,24 +5,25 @@
 
 #define BILLION 1000000000
 
-uint8_t* make_buffer(int len)
+uint64_t* make_buffer(int len)
 {
-  uint8_t* ret = malloc(8*len);
+  uint64_t* ret = malloc(64*len);
   for (int i=0; i < len; i++)
     {
-      ret[i] = rand() % (1<<8 - 1);
+      ret[i] = rand() % len;
     }
   return ret;
 }
 
-void access_at_random(uint8_t* buffer, int size)
+void access_at_random(uint64_t* buffer, int size)
 {
-  uint8_t datum = buffer[0];
+  uint64_t datum = buffer[0];
   for (int i=0; i < size; i++)
     {
       datum = buffer[datum];
     }
-  buffer[0] = datum;
+  buffer[0] = (datum * 15485863) % size;
+  printf("%d\n",(int)datum);
 }
 
 
@@ -37,7 +38,7 @@ int main(int argc, char** argv)
   struct timespec begin;
   struct timespec end;
 
-  uint8_t* buffer = make_buffer(size);
+  uint64_t* buffer = make_buffer(size);
   printf("Buffer loaded.\n");
 
   clock_gettime(CLOCK_MONOTONIC, &begin);
