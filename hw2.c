@@ -23,17 +23,16 @@ void access_at_random(uint8_t* buffer, int size)
       datum = buffer[datum];
     }
   buffer[0] = datum;
-  printf("%d\n",datum);
 }
 
 
 
 int main(int argc, char** argv)
 {
-  if (argc != 3) printf("%s <size> <iters>\n",argv[0]);
+  if (argc != 3) printf("%s <2^size> <2^iters>\n",argv[0]);
 
-  const int size = atoi(argv[1]);
-  const int iters = atoi(argv[2]);
+  const int size = 1 << atoi(argv[1]);
+  const int iters = 1 << atoi(argv[2]);
   srand(time(NULL));
   struct timespec begin;
   struct timespec end;
@@ -48,7 +47,8 @@ int main(int argc, char** argv)
   }
   clock_gettime(CLOCK_MONOTONIC, &end);
 
-  int duration = BILLION*(end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec);
-  printf("Duration: %d",duration);
+  double duration = BILLION*(end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec);
+  duration /= iters*size;
+  printf("Duration: %fns",duration);
   printf("\n");
 }
