@@ -5,6 +5,9 @@
 
 #define BILLION 1000000000
 
+FILE *fileout;
+const char outputFilename[] = "temp.txt";
+
 uint8_t* make_buffer(int len)
 {
   uint8_t* ret = malloc(8*len);
@@ -71,4 +74,11 @@ int main(int argc, char** argv)
   duration /= iters*size;
   printf("Duration: %fns",duration);
   printf("\n");
+
+  //Write time to a file
+  fileout = fopen(outputFilename, "a");
+  fprintf(fileout, "%f\n", duration);
+  fclose(fileout);
+
+  return 0;
 }
