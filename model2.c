@@ -44,6 +44,8 @@ uint8_t* make_blockbuffer(int len){
   return ret;
 }
 
+//This algorithm looks up bytes by picking a random 2^8 sized block in the buffer, going there and then adding the value of the previously picked byte to the index, starting with 0
+
 void random_access_model2(uint8_t* buffer, int size, uint8_t* trash){
   uint8_t add_to_index = 0;
   int num_blocks = size/(1<<8);
@@ -139,7 +141,7 @@ int main(int argc, char** argv)
   srand(time(NULL));
   struct timespec begin;
   struct timespec end;
-  uint8_t* buffer = make_buffer(size);
+  uint8_t* buffer = make_blockbuffer(size);
   uint8_t* trash = malloc(8*size);
   printf("Buffer loaded.\n");
 
