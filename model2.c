@@ -3,10 +3,6 @@
 #include <stdint.h>
 #include <time.h>
 
-#define BILLION 1000000000
-
-FILE *fileout;
-const char outputFilename[] = "temp.txt";
 
 uint8_t* make_buffer(int len)
 {
@@ -60,14 +56,6 @@ void random_access_model2(uint8_t* buffer, int size, uint8_t* trash){
     }
 }
 
-void access_at_random(uint8_t* buffer, int size,uint8_t* trash)
-{
-  for (int i=0; i < size; i++)
-    {
-      trash[i] = buffer[i];
-    }
-}
-
 //Shuffles a list of ints
 void shuffle(uint8_t* ls, int length){
   printf("Length of list is: %d\n", length);
@@ -111,7 +99,7 @@ int main(int argc, char** argv){
   }
   const int size = 1 << atoi(argv[1]);
   
-  fileout = fopen(outputFilename, "a");
+  const FILE* fileout = fopen(outputFilename, "a");
   uint8_t* ls = make_blockbuffer(size);
   shuffle(ls,size);
   for(int i=0; i < size; i++){
@@ -133,9 +121,10 @@ int main(int argc, char** argv)
     printf("%s <2^size> <2^iters>\n",argv[0]);
     return 0;
   }
-
-  const int size = 1 << atoi(argv[1]);
-  const int iters = 1 << atoi(argv[2]);
+  const uint64_t size = 1 << atoi(argv[1]);
+  const uint64_t iters = 1 << atoi(argv[2]);
+  const int BILLION = 1000000000;
+  const char outputFilename[] = "temp.txt";
  
   //Initialization
   srand(time(NULL));
@@ -161,7 +150,7 @@ int main(int argc, char** argv)
   printf("\n");
 
   //Write time to a file
-  fileout = fopen(outputFilename, "a");
+  FILE* fileout = fopen(outputFilename, "a");
   fprintf(fileout, "%f\n", duration);
   fclose(fileout);
 
