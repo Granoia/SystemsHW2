@@ -18,13 +18,8 @@ uint8_t* make_buffer(int len)
 uint8_t* make_blockbuffer(int len){
   if(len < (1 << 8)){
     printf("Size must be 2^8 or higher\n");
-    uint8_t* ret = malloc(8);
-    for(int i=0; i<8; i++){
-      ret[i] = 0;
-    }
-    return ret;
+    exit(-1)
   }
-
 
   uint8_t* ret = malloc(8*len);
   uint8_t block_counter = 0;
@@ -68,49 +63,6 @@ void shuffle(uint8_t* ls, int length){
   }
   return;
 }
-
-
-//Shuffles a block buffer such that none of the numbers switch into different blocks
-//Doesn't work for size bigger than 2^8 for some reason. Gives: floating point exception (core dumped)
-/*
-void block_shuffle(uint8_t* ls, int length){
-  int start_index = 0;
-  int end_index = 255;
-  while(end_index < length){
-    for(int i = start_index; i<=end_index; i++){
-      int j = rand() % (256-i);
-      uint8_t a = ls[i];
-      uint8_t b = ls[i+j];
-      ls[i] = b;
-      ls[i+j] = a;
-    }
-    start_index += 256;
-    end_index += 256;
-  }
-    return;
-}
-*/
-
-/*
-int main(int argc, char** argv){
-  if (argc != 2){
-    printf("what are you even doing");
-    return 0;
-  }
-  const int size = 1 << atoi(argv[1]);
-  
-  const FILE* fileout = fopen(outputFilename, "a");
-  uint8_t* ls = make_blockbuffer(size);
-  shuffle(ls,size);
-  for(int i=0; i < size; i++){
-    fprintf(fileout, "%i\n", ls[i]);
-  }
-  fclose(fileout);
-  printf("Finished writing\n");
-  return 0;
-}
-*/
-
 
 
 int main(int argc, char** argv)
