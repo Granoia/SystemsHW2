@@ -54,14 +54,6 @@ void random_access_model2(uint8_t* buffer, int size, uint8_t* trash){
     }
 }
 
-void access_at_random(uint8_t* buffer, int size,uint8_t* trash)
-{
-  for (int i=0; i < size; i++)
-    {
-      trash[i] = buffer[i];
-    }
-}
-
 //Shuffles a list of ints
 void shuffle(uint8_t* ls, int length){
   printf("Length of list is: %d\n", length);
