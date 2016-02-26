@@ -19,11 +19,11 @@ The latency of the first step (1-128 kB) is 0.5-1 ns, which agrees with the perf
 
 Therefore the first step would appear to be the L1 cache, the second step the L2 cache, and the third step main memory. This is consistent with the buffer sizes; the L1 cache is 4kB*64 entries = 256kB, which is exactly where the first jump occurs. The L2 cache is 4MB*32 = 128MB, which is exactly where the second jumps begins.
 
-============================The Model2 data:===========================
+#**============================The Model2 data:===========================**#
 ![](/graphs/model2_linear.png?raw=true "Optional Title")
 ![](/graphs/model2_log.png?raw=true "Optional Title")
 
-==============================The Stepper data:============================
+#**==============================The Stepper data:============================**#
 ![](/graphs/adjusted_linear.png?raw=true "Optional Title")
 ![](/graphs/adjusted_log.png?raw=true "Optional Title")
 
