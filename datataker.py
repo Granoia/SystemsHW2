@@ -3,22 +3,23 @@ import sys, os, numpy, subprocess
 #<sampleSize> is set to 10 by default, adjusting __main__ is required to change that
 #compile the thing being timed so that the executable name is fetch_values
 
-def getIters(filename, size, output, sampleSize=10):
+def getIters(filename, output, sampleSize=3):
     currSize = 8
     while currSize <= 24:
         iters = 30 - currSize
         for i in range(sampleSize):
-            subprocess.call(['./fetch_values', str(size), str(iters)])
+            subprocess.call(['./fetch_values', str(currSize), str(iters)])
+            print("Fetching: size " + str(currSize) + "; iters " + str(iters))
         ls = []
         with open('temp.txt','r') as f:
             for i in range(sampleSize):
                 x = float(f.readline())
                 ls.append(x)
         ls.sort()
-        median = ls[sampleSize // 2]
+        min = ls[0]
         os.remove('temp.txt')
         with open(output,'a') as f:
-            f.write(str(currSize) + ',' + str(median) + ',' + str(iters) + '\n')
+            f.write(str(currSize) + ',' + str(min) + ',' + str(iters) + '\n')
         currSize += 1
             
 
@@ -27,4 +28,4 @@ if __name__ == "__main__":
         print("datataker  <output>")
         os.sys.exit(-1)
     output = sys.argv[1]
-    getIters('./fetch_values', 8, output)
+    getIters('./fetch_values', output)
