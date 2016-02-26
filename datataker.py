@@ -5,21 +5,22 @@ import sys, os, numpy, subprocess
 
 def getIters(filename, output, sampleSize=3):
     currSize = 8
-    while currSize <= 24:
-        iters = 30 - currSize
+    while currSize <= 27:
+        iters = 28 - currSize
         for i in range(sampleSize):
             subprocess.call(['./fetch_values', str(currSize), str(iters)])
             print("Fetching: size " + str(currSize) + "; iters " + str(iters))
         ls = []
         with open('temp.txt','r') as f:
             for i in range(sampleSize):
-                x = float(f.readline())
+                x = f.readline()
                 ls.append(x)
-        ls.sort()
-        min = ls[0]
+       # ls.sort()
+       # min = ls[0]
         os.remove('temp.txt')
         with open(output,'a') as f:
-            f.write(str(currSize) + ',' + str(min) + ',' + str(iters) + '\n')
+            for line in ls:
+                f.write(line);
         currSize += 1
             
 
