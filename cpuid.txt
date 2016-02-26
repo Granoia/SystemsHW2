@@ -14,8 +14,8 @@ F0	64B prefetching
 00	==> Register contains valid information
 
 EDX:
-00,00,00
+00,00,00 (contain no valid information, register contains valid information)
 CA	Shared 2nd level TLB: 4KB page, 4-way associative, 512 entries
 
 ECX:
-00,00,00,00
+00,00,00,00 (contain no valid information, register contains valid information)
