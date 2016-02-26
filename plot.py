@@ -16,17 +16,19 @@ def getHeader(filename):
     
 def plot(filename):
     x = map(float,getColumn(filename,0))
-    y = map(float,getColumn(filename,1))
+    y = map(float,getColumn(filename,2))
     length = len(x)
     colors = ['red', 'green', 'blue']
-
     plt.figure(getHeader(filename))
-    plt.title('linear scale')
+    plt.title('log scale')
     plt.xlabel("Array Size")
     plt.ylabel("Speed / Value (ns)")
-    plt.ylim((0,.2))
-    plt.xlim((6,25))
-    plt.xticks(range(8,25,2), [r"$2^{ " + str(i) + "}$" for i in range(8,25,2)])
+    plt.ylim((min(y)*1.2,max(y)*1.2))
+    plt.xlim((6,30))
+    plt.xticks(range(8,30,2), [r"$2^{ " + str(i) + "}$" for i in range(8,30,2)])
+    plt.yscale('symlog')
+    ticks = [.1,1,2,4,6,8,10,20,40,80,100]
+    plt.yticks(ticks, map(str,ticks))
     plt.scatter(x, y)
 
 
@@ -38,8 +40,10 @@ if __name__ == '__main__':
     if scale == 'log':
         plt.title('log scale')
         plt.yscale('log')
-        plt.ylim((0,.2))
-        plt.yticks([.02,.04,.05,.06,.07,.08,.1,.2], ['.02','.04','.05','.06','.07','.08','.1','.2'])
-    plt.savefig('new.png')
+        plt.ylim((0,8))
+        plt.yticks([.01,.02,.04,.08,.16,.32,.64,1.2,2,4,8])
+        plt.savefig('new.png')
+    elif scale == 'lin':
+        plt.savefig('new.png')
     plt.close()
-    
+    sys.exit(0)
