@@ -18,7 +18,7 @@ uint8_t* make_buffer(int len)
 uint8_t* make_blockbuffer(int len){
   if(len < (1 << 8)){
     printf("Size must be 2^8 or higher\n");
-    exit(-1)
+    exit(-1);
   }
 
   uint8_t* ret = malloc(8*len);
