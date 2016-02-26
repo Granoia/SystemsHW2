@@ -83,7 +83,7 @@ int main(int argc, char** argv)
 
   //Write time to a file
   FILE* fileout = fopen("temp.txt", "a");
-  fprintf(fileout, "%f\n", duration);
+  fprintf(fileout, "%f,%f\n", duration,adjusted_duration);
   fclose(fileout);
 
   return 0;
