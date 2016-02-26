@@ -12,22 +12,24 @@ def getColumn(filename, column):
 def getHeader(filename):
     header = open(filename, 'r')
     return header.readline()
-    
+
+def normalize(i):
+        return i - 10
     
 def plot(filename):
     x = map(float,getColumn(filename,0))
+    x = map(normalize,x)
     y = map(float,getColumn(filename,2))
     length = len(x)
     colors = ['red', 'green', 'blue']
     plt.figure(getHeader(filename))
-    plt.title('log scale')
-    plt.xlabel("Array Size")
+    plt.title('linear scale')
+    plt.xlabel("Array Size (kB)")
     plt.ylabel("Speed / Value (ns)")
     plt.ylim((min(y)*1.2,max(y)*1.2))
-    plt.xlim((6,30))
-    plt.xticks(range(8,30,2), [r"$2^{ " + str(i) + "}$" for i in range(8,30,2)])
-    plt.yscale('symlog')
-    ticks = [.1,1,2,4,6,8,10,20,40,80,100]
+    plt.xlim((-1,20))
+    plt.xticks(range(0,20,2), [r"$2^{ " + str(i) + "}$" for i in range(0,20,2)])
+    ticks = [0,1,2,3,4,5,6,7,8]
     plt.yticks(ticks, map(str,ticks))
     plt.scatter(x, y)
 
