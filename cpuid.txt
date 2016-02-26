@@ -1,0 +1,21 @@
+Processor:GenuineIntel
+
+EAX:
+01	Default
+5A	Data TLB0: 2Mb or 4MB pages, 4-way set associative, 32 entries
+03	Data TLB: 4 KB pages, 4-way set associative, 64 entries
+76	Binary: 1110110 ==> Register contains valid information
+76	Instruction TLB: 2M/4M pages, fully associative, 8 entries
+
+EBX:
+FF	CPUID leaf 2 does not report cache info; use leaf 4
+B0	Instruction TLB: 4KB pages, fully associative, 32 entries
+F0	64B prefetching
+00	==> Register contains valid information
+
+EDX:
+00,00,00
+CA	Shared 2nd level TLB: 4KB page, 4-way associative, 512 entries
+
+ECX:
+00,00,00,00
