@@ -42,14 +42,30 @@ void random_access_model2(uint8_t* buffer, int size, uint8_t* trash){
   int num_blocks = size/(1<<8);
   int pick_a_block = rand() % (num_blocks);
   uint8_t lookup = 0;
-
+  const int TWOtotheEIGHT = 1 << 8;
   for (int i=0; i<size; i++){
-      lookup = buffer[add_to_index + (pick_a_block * (1 << 8))];
+      lookup = buffer[add_to_index + (pick_a_block * TWOtotheEIGHT)];
       trash[i] = lookup;
       add_to_index = lookup;
       pick_a_block = rand() % (num_blocks);
     }
 }
+
+
+void dummy_random_access(int size){
+  int num_blocks = size/(1<<8);
+  int pick_a_block = rand() % (num_blocks);
+  uint8_t add_to_index = 0;
+  int dummy = 0;
+  const int TWOtotheEIGHT = 1 << 8;
+
+  for (int i=0; i<size; i++){
+    dummy = add_to_index + (pick_a_block * TWOtotheEIGHT);
+    pick_a_block = rand() % (num_blocks);
+    add_to_index = dummy % TWOtotheEIGHT;
+  }
+}
+
 
 //Shuffles a list of ints
 void shuffle(uint8_t* ls, int length){
@@ -82,6 +98,7 @@ int main(int argc, char** argv)
   srand(time(NULL));
   struct timespec begin;
   struct timespec end;
+  struct timespec dummyend;
   uint8_t* buffer = make_blockbuffer(size);
   shuffle(buffer, size);
   uint8_t* trash = malloc(8*size);
@@ -94,17 +111,29 @@ int main(int argc, char** argv)
     random_access_model2(buffer, size,trash);
   }
   clock_gettime(CLOCK_MONOTONIC, &end);
+  for (int i=0; i < iters; i++){
+    dummy_random_access(size);
+  }
+  clock_gettime(CLOCK_MONOTONIC, &dummyend);
   free(buffer);
   free(trash);
   //Output the time
   double duration = BILLION*(end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec);
+  double dummyduration = BILLION*(dummyend.tv_sec - end.tv_sec) + (dummyend.tv_nsec - end.tv_nsec);
+  double adjusted = duration - dummyduration;
   duration /= iters*size;
+  dummyduration /= iters*size;
+  adjusted /= iters*size;
   printf("Duration: %fns",duration);
+  printf("\n");
+  printf("Dummy Duration: %fns",dummyduration);
+  printf("\n");
+  printf("Adjusted Duration: %fns",adjusted);
   printf("\n");
 
   //Write time to a file
   FILE* fileout = fopen(outputFilename, "a");
-  fprintf(fileout, "%f\n", duration);
+  fprintf(fileout, "%s,%f,%f,%s\n",argv[1], duration, adjusted, argv[2]);
   fclose(fileout);
 
   return 0;
