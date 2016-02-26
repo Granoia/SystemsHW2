@@ -6,7 +6,7 @@ Both programs implement background subtraction by repeating all of the operation
 
 Both programs demonstrated a clear jump in time per write at 2^18 kilobytes (260 megabytes). Model2 also demonstrates a jump at 256 kilobytes. The jump takes place between the 128 and 512 kB ranges. The continuous nature of the jump could be due to half the buffer fitting in the cache while the other half remains uncached.
 
-Cpuid was run (cpuid.c) and produced the following results [cpuid.txt](\cpuid.txt):
+Cpuid was run [(cpuid.c)](\cpuid.c) and produced the following results [(cpuid.txt).](\cpuid.txt):
 5A	Data TLB0: 2Mb or 4MB pages, 4-way set associative, 32 entries
 03	Data TLB: 4 KB pages, 4-way set associative, 64 entries
 76	Instruction TLB: 2M/4M pages, fully associative, 8 entries
