@@ -14,6 +14,7 @@ B0	Instruction TLB: 4KB pages, fully associative, 32 entries
 F0	64B prefetching
 CA	Shared 2nd level TLB: 4KB page, 4-way associative, 512 entries
 
+Notably 
 
 The Model2 data:
 ![](/graphs/model2_linear.png?raw=true "Optional Title")
