@@ -131,6 +131,7 @@ int main(int argc, char** argv)
   struct timespec begin;
   struct timespec end;
   uint8_t* buffer = make_blockbuffer(size);
+  shuffle(buffer, size);
   uint8_t* trash = malloc(8*size);
   printf("Buffer loaded.\n");
 
